@@ -115,7 +115,7 @@ class MyDocumentProvider : DocumentsProvider() {
         val thumbnail = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ThumbnailUtils.createImageThumbnail(originalFile, android.util.Size(sizeHint.x, sizeHint.y), signal)
         } else
-            Glide.with(context).load(originalFile).centerCrop().submit(sizeHint.x, sizeHint.y).get().toBitmap()
+            Glide.with(context).load(originalFile).centerCrop().skipMemoryCache(true).submit(sizeHint.x, sizeHint.y).get().toBitmap()
         val cachedFile = File(context.cacheDir, CACHED_FILE_FILENAME)
         thumbnail.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(cachedFile))
         val pfd = ParcelFileDescriptor.open(cachedFile, ParcelFileDescriptor.MODE_READ_ONLY)
